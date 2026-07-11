@@ -1,42 +1,44 @@
 #include "scheduler.h"
 
-static void heartbeat_task();
+#include "heartbeat.h"
+#include "comm.h"
+#include "imu.h"
+#include "debug.h"
+#include "display.h"
+
 
 static Task tasks[] =
 {
-    {0, 1000, heartbeat_task}
+    {0,1000, heartbeat_update},
+    {0, 100,  comm_update},
+    {0, 10,   imu_update},
+    {0, 500,  debug_update},
+    {0, 200,  display_update}
 };
 
-static const byte TASK_COUNT = sizeof(tasks) / sizeof(tasks[0]);
 
-static void heartbeat_task()
-{
-    static bool ledState = false;
+static const byte TASK_COUNT =
+    sizeof(tasks) / sizeof(tasks[0]);
 
-    ledState = !ledState;
-
-    digitalWrite(LED_BUILTIN, ledState);
-}
 
 void scheduler_init()
 {
-    pinMode(LED_BUILTIN, OUTPUT);
-
     unsigned long now = millis();
 
-    for (byte i = 0; i < TASK_COUNT; i++)
+    for(byte i = 0; i < TASK_COUNT; i++)
     {
         tasks[i].previousTime = now;
     }
 }
 
+
 void scheduler_run()
 {
     unsigned long now = millis();
 
-    for (byte i = 0; i < TASK_COUNT; i++)
+    for(byte i = 0; i < TASK_COUNT; i++)
     {
-        if (now - tasks[i].previousTime >= tasks[i].period)
+        if(now - tasks[i].previousTime >= tasks[i].period)
         {
             tasks[i].previousTime = now;
             tasks[i].callback();
