@@ -5,6 +5,8 @@
 #include "imu.h"
 #include "debug.h"
 #include "display.h"
+#include "servo.h"
+#include "ultrasonic.h"
 
 
 static Task tasks[] =
@@ -13,7 +15,9 @@ static Task tasks[] =
     {0, 100,  comm_update},
     {0, 10,   imu_update},
     {0, 500,  debug_update},
-    {0, 200,  display_update}
+    {0, 200,  display_update},
+    {0,20,   servo_update},
+    {0,100, ultrasonic_update}
 };
 
 

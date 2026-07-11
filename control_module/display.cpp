@@ -5,6 +5,7 @@
 
 #include "display.h"
 #include "imu.h"
+#include "ultrasonic.h"
 
 
 #define SCREEN_WIDTH 128
@@ -65,6 +66,13 @@ void display_update()
 
     oled.print("GZ:");
     oled.println(imu.gyroZ);
+
+    // Ultra
+    uint16_t distance = ultrasonic_getDistance();
+
+    oled.print("D:");
+    oled.print(distance);
+    oled.println("cm");
 
 
     oled.display();
