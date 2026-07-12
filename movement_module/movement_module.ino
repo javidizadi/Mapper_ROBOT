@@ -18,7 +18,7 @@
 volatile bool isCommandArrived = false;
 
 void setup() {
-  Wire.begin(0xFF);
+  Wire.begin(0x10);
   Wire.onReceive(I2C0_OnReceive);
 }
 
