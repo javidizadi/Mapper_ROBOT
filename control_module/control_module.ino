@@ -1,31 +1,36 @@
 #include "scheduler.h"
 
 #include "heartbeat.h"
-#include "comm.h"
+#include "web_comm.h"
+#include "motor_comm.h"
+#include "motion_manager.h"
 #include "imu.h"
-#include "debug.h"
-#include "display.h"
 #include "servo.h"
 #include "ultrasonic.h"
-
+#include "display.h"
+#include "debug.h"
 
 void setup()
 {
     heartbeat_init();
 
-    debug_init();
+    webComm_init();
+    motorComm_init();
 
-    comm_init();
+    motionManager_init();
+
     imu_init();
+
+    servo_init();
+
+    ultrasonic_init();
 
     display_init();
 
-    servo_init();
-    ultrasonic_init();
+    debug_init();
 
     scheduler_init();
 }
-
 
 void loop()
 {
