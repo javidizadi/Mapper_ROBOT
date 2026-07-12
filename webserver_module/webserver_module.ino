@@ -40,7 +40,7 @@ void setup() {
 
   server.begin();
 
-  Wire.begin(0xFE);
+  Wire.begin(0x11);
   Wire.onRequest(I2C_onRequest);
 }
 
