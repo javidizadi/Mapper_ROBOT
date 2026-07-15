@@ -36,7 +36,6 @@ public:
     motor_l.set_speed(-1 * speed_on_x);
   }
 
-  // TODO: rotation should be done with one only, currently does it with two
   void rotate(int speed_on_yaw) {
     // motor_l.set_speed(speed_on_yaw);
     // motor_r.set_speed(speed_on_yaw);
@@ -44,10 +43,12 @@ public:
     // TURN LEFT
     if (speed_on_yaw >= 0) {
       motor_r.set_speed(speed_on_yaw);
+      motor_l.brake();
     }
     // TURN RIGHT
     else {
       motor_l.set_speed(speed_on_yaw);
+      motor_r.brake();
     }
   }
 

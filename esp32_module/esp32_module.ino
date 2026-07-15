@@ -1,10 +1,11 @@
 #include <Wire.h>
 #include "web_server.h"
+#include "movement_instruction_enum.h"
 
 #define I2C_SCL 32
 #define I2C_SDA 33
 
-extern volatile COMMAND command_to_send;
+extern volatile MovementInstruction command_to_send;
 
 void setup() {
   init_web_server();
@@ -16,6 +17,7 @@ void setup() {
 
 void loop() {
   request_handle_web_server();
+  handleInstruction(command_to_send);
 }
 
 void I2C_onRequest() {

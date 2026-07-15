@@ -2,18 +2,10 @@
 
 #include <WiFi.h>
 #include <WebServer.h>
+#include "movement_instruction_enum.h"
 #include "web_page.h"
 
-enum COMMAND : uint8_t {
-  FORWARD = 0x00,
-  BACKWARD = 0x01,
-  TURN_RIGHT = 0x02,
-  TURN_LEFT = 0x03,
-  BRAKE = 0x04,
-  NONE = 0x05
-};
-
-volatile COMMAND command_to_send = COMMAND::NONE;
+volatile MovementInstruction command_to_send = MovementInstruction::NONE;
 
 const char* ssid = "ESP32";
 const char* password = "12345678";
@@ -35,27 +27,27 @@ void handle_root() {
 }
 
 void handle_forward() {
-  command_to_send = COMMAND::FORWARD;
+  command_to_send = MovementInstruction::FORWARD;
   server.send(200);
 }
 
 void handle_backward() {
-  command_to_send = COMMAND::BACKWARD;
+  command_to_send = MovementInstruction::BACKWARD;
   server.send(200);
 }
 
 void handle_turn_left() {
-  command_to_send = COMMAND::TURN_LEFT;
+  command_to_send = MovementInstruction::TURN_LEFT;
   server.send(200);
 }
 
 void handle_turn_right() {
-  command_to_send = COMMAND::TURN_RIGHT;
+  command_to_send = MovementInstruction::TURN_RIGHT;
   server.send(200);
 }
 
 void handle_brake() {
-  command_to_send = COMMAND::BRAKE;
+  command_to_send = MovementInstruction::BRAKE;
   server.send(200);
 }
 
